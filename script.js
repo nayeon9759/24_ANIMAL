@@ -6,26 +6,27 @@ document.addEventListener("DOMContentLoaded", () => {
   let localSubmissions = []; 
   const submissionsList=document.getElementById("submissionsList");
 
+  // 키 값 매핑 정의
+  const keyMap={
+    hasPet:"반려동물 보유",
+    region:"지역",
+    regionOther:"직접 입력 지역",
+    priorityCriteria:"병원 선택 기준",
+    concernAndFeature:"불만/필요 기능",
+    priority1:"1순위 정보",
+    priority2:"2순위 정보",
+    priceRange:"최대 지불 의향"
+  };
 
-  // 제출 기록 목록을 화면에 렌더링하는 함수 (추가)
+
+  // 제출 기록 목록을 화면에 렌더링하는 함수 (배열 전체를 새로 그림)
   const renderSubmissionsList = () => {
-      submissionsList.innerHTML = ''; // 기존 목록 초기화
+      submissionsList.innerHTML = ''; // 🌟 중요: 목록을 그리기 전에 항상 초기화 (중복 방지)
 
       if (localSubmissions.length === 0) {
           submissionsList.innerHTML = '<div class="placeholder">아직 제출된 기록이 없습니다.</div>';
           return;
       }
-
-      const keyMap={
-          hasPet:"반려동물 보유",
-          region:"지역",
-          regionOther:"직접 입력 지역",
-          priorityCriteria:"병원 선택 기준",
-          concernAndFeature:"불만/필요 기능",
-          priority1:"1순위 정보",
-          priority2:"2순위 정보",
-          priceRange:"최대 지불 의향"
-      };
 
       // 최신 항목이 위에 오도록 역순으로 정렬 후 화면에 표시
       localSubmissions.slice().reverse().forEach(payload => {
@@ -33,7 +34,6 @@ document.addEventListener("DOMContentLoaded", () => {
           card.className="record";
           
           let html=Object.entries(payload).filter(([k,v])=>{
-              // Timestamp는 Sheets에서 자동으로 찍히므로 제외
               if(k==="Timestamp") return false; 
               if(k==="regionOther" && payload.region!=="기타") return false;
               if(k==="hasPet" && v==="예") return false;
@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
             localSubmissions = data;
         }
         
-        // 초기 데이터 로드 후 목록을 렌더링합니다.
+        // 🌟 초기 데이터 로드 후 목록을 먼저 렌더링합니다.
         renderSubmissionsList();
         
         // submissions 탭이 활성화되어 있다면 그래프도 그립니다.
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
   fetchSubmissions(); 
 
 
-  // TAB
+  // TAB (탭 클릭 시 목록 및 차트 갱신)
   document.querySelectorAll(".tab-btn").forEach(btn => {
     btn.addEventListener("click", () => {
       document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
@@ -83,7 +83,7 @@ document.addEventListener("DOMContentLoaded", () => {
       document.getElementById(btn.dataset.target).classList.add("active");
       if(btn.dataset.target==="submissions") {
             renderCharts();
-            renderSubmissionsList(); // 탭을 클릭할 때마다 목록을 다시 그림
+            renderSubmissionsList(); 
         }
     });
   });
@@ -106,18 +106,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // FORM SUBMIT
   const form=document.getElementById("petSurveyForm");
   const msg=document.getElementById("msg");
-  // submissionsList는 이미 위에 전역으로 선언됨
-
-  const keyMap={
-    hasPet:"반려동물 보유",
-    region:"지역",
-    regionOther:"직접 입력 지역",
-    priorityCriteria:"병원 선택 기준",
-    concernAndFeature:"불만/필요 기능",
-    priority1:"1순위 정보",
-    priority2:"2순위 정보",
-    priceRange:"최대 지불 의향"
-  };
 
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -141,7 +129,7 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
         
-        // 서버 전송이 완료되면 로컬 배열에 추가 (한 번만!)
+        // 서버 전송이 완료되면 로컬 배열에만 추가
         localSubmissions.push(payload);
         msg.textContent = "💌 제출이 완료되었습니다! (Google Sheets에 저장됨)"; 
         
@@ -151,25 +139,14 @@ document.addEventListener("DOMContentLoaded", () => {
         msg.textContent = "💌 제출이 완료되었습니다! (Google Sheets에 저장됨)"; 
         console.log("Fetch Error (일반적으로 Apps Script no-cors 때문):", error);
     }
-
-    // 제출된 항목을 즉시 목록 맨 위에 추가
-    const card=document.createElement("div");
-    card.className="record";
-    
-    let html=Object.entries(payload).filter(([k,v])=>{
-      if(k==="regionOther" && payload.region!=="기타") return false;
-      if(k==="hasPet" && v==="예") return false;
-      return v!=="";
-    }).map(([k,v])=>`<div><strong>${keyMap[k]||k}:</strong> ${v}</div>`).join("");
-    
-    if(html==="") html="<div>제출된 정보 없음</div>";
-    card.innerHTML=html;
-    submissionsList.prepend(card); 
+    
+    // 🌟 중복 출력 원인 제거: 목록을 수동으로 그리는 코드를 삭제했습니다.
 
     form.reset();
     regionOtherInput.style.display='none';
     
-    // 제출 후 '다른 사람 의견 보기' 탭을 자동으로 클릭하여 그래프를 표시합니다.
+    // 제출 후 '다른 사람 의견 보기' 탭을 자동으로 클릭합니다.
+    // 이 클릭이 탭 리스너를 실행하여 renderSubmissionsList()를 한 번만 호출합니다.
     document.querySelector('.tab-btn[data-target="submissions"]').click();
   });
 
