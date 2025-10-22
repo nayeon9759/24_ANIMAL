@@ -1,10 +1,10 @@
 /* 기존 디자인 그대로 유지 */
 :root{
-  --bg:#0f1724;
-  --primary:#ff4d4f;
-  --accent:#ff9f43;
-  --card:#1f2a38;
-  --muted:#b9c0d7;
+  --bg:#0f1724; /* 배경: 어두운 남색 */
+  --primary:#ff4d4f; /* 메인 색상: 밝은 빨강 (긴급) */
+  --accent:#ff9f43; /* 강조 색상: 주황 */
+  --card:#1f2a38; /* 카드 배경: 중간 어두운 색 */
+  --muted:#b9c0d7; /* 뮤트 텍스트 */
 }
 
 *{box-sizing:border-box}
@@ -20,18 +20,6 @@ body{margin:0; font-family: "Noto Sans KR", sans-serif; background:var(--bg); co
 .tabs{display:flex; gap:6px; margin:12px 0;}
 .tab-btn{flex:1;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;transition:0.2s}
 .tab-btn.active{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(255,77,79,0.4);}
-
-/* submissions */
-.submissions-list{
-  margin-top:12px;
-  display:grid;
-  gap:8px;
-  /* ✨ 이 두 속성이 스크롤을 담당합니다. */
-  max-height:300px; /* 목록이 가질 수 있는 최대 높이 지정 */
-  overflow:auto;    /* 내용이 max-height를 초과하면 스크롤바 생성 */
-  
-  padding-right:4px; /* 스크롤바가 생길 공간 확보 */
-}
 
 /* PANELS */
 .panel{display:none;padding:12px 0}
@@ -54,16 +42,49 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
 .btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.1);}
 .btn.small{padding:4px 8px;font-size:12px}
 
-/* submissions */
-.submissions-list{margin-top:12px;display:grid;gap:8px;max-height:300px;overflow:auto;padding-right:4px}
-.record{background:rgba(255,255,255,0.02);padding:8px;border-radius:6px}
-.meta{font-size:12px;color:var(--muted)}
-.txt{font-size:13px}
+/* Submissions Section */
+.submissions-list{
+  margin-top:12px;
+  display:grid;
+  gap:8px;
+  max-height:300px;
+  overflow:auto;
+  padding-right:4px;
+}
+.record{
+  background:rgba(255,255,255,0.02);
+  padding:8px;
+  border-radius:6px;
+  border-left: 3px solid var(--accent); /* 강조 표시 */
+}
+.record div{
+    font-size: 13px;
+    line-height: 1.4;
+    color: var(--muted);
+}
+.record strong{
+    color: #e6eef8;
+    font-weight: bold;
+}
+.placeholder{
+    color: var(--muted);
+    text-align: center;
+    padding: 20px;
+}
+
+/* Charts */
+.charts{
+    margin-top: 20px;
+}
+.chart-title{
+    color: var(--primary);
+    margin: 20px 0 10px 0;
+}
 
 /* guide */
 .guide-card{padding:10px;background:rgba(255,255,255,0.01);border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
 
 /* footer */
-.footer{margin-top:12px;text-align:center;font-size:12px;color:var(--muted)}
+.footer{margin-top:20px;text-align:center;font-size:12px;color:var(--muted)}
 
 @media(max-width:640px){.options.grid{grid-template-columns:1fr}}
