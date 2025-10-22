@@ -1,112 +1,22 @@
 <!doctype html>
-<!--
-Created using JS Bin
-http://jsbin.com
-
-Copyright (c) 2025 by nayeon9759 (http://jsbin.com/cenojun/7/edit)
-
-Released under the MIT license: http://jsbin.mit-license.org
--->
 <meta name="robots" content="noindex">
 <html lang="ko">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>반려친구 긴급케어 설문</title>
-  <link rel="stylesheet" href="styles.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<style id="jsbin-css">
-/* 기존 디자인 그대로 유지 */
-:root{
-  --bg:#0f1724;
-  --primary:#ff4d4f;
-  --accent:#ff9f43;
-  --card:#1f2a38;
-  --muted:#b9c0d7;
-}
-
-*{box-sizing:border-box}
-body{margin:0; font-family: "Noto Sans KR", sans-serif; background:var(--bg); color:#e6eef8; padding:20px;}
-.wrap{max-width:900px;margin:0 auto;border-radius:12px;background:var(--card);padding:16px;box-shadow:0 6px 20px rgba(0,0,0,0.5);}
-
-/* HERO */
-.hero{padding:16px 20px;border-bottom:1px solid rgba(255,255,255,0.1)}
-.hero-inner h1{margin:0;color:var(--primary)}
-.lead{margin:4px 0 0;color:var(--muted);font-size:14px}
-
-/* TABS */
-.tabs{display:flex; gap:6px; margin:12px 0;}
-.tab-btn{flex:1;padding:8px 10px;border-radius:8px;background:var(--card);border:1px solid rgba(255,255,255,0.1);color:var(--muted);cursor:pointer;transition:0.2s}
-.tab-btn.active{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(255,77,79,0.4);}
-
-/* submissions */
-.submissions-list{
-  margin-top:12px;
-  display:grid;
-  gap:8px;
-  /* ✨ 이 두 속성이 스크롤을 담당합니다. */
-  max-height:300px; /* 목록이 가질 수 있는 최대 높이 지정 */
-  overflow:auto;    /* 내용이 max-height를 초과하면 스크롤바 생성 */
-  
-  padding-right:4px; /* 스크롤바가 생길 공간 확보 */
-}
-
-/* PANELS */
-.panel{display:none;padding:12px 0}
-.panel.active{display:block}
-.form-card{background:rgba(255,255,255,0.05);padding:12px;margin-bottom:12px;border-radius:8px;border:1px solid rgba(255,255,255,0.1)}
-.q{font-weight:700;margin-bottom:6px}
-.required{color:var(--primary)}
-
-.options.inline label{margin-right:16px}
-.options.grid{display:grid;grid-template-columns:1fr 1fr;gap:6px}
-.options label{display:flex;align-items:center;padding:8px;border-radius:6px;background:rgba(255,255,255,0.02);cursor:pointer;transition:0.2s}
-.options input{margin-right:6px}
-
-select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.1);color:white;font-size:14px;}
-
-/* Buttons */
-.btn{padding:8px 12px;border-radius:6px;font-weight:700;cursor:pointer;border:none;transition:0.2s}
-.btn.primary{background:var(--primary);color:white;box-shadow:0 4px 12px rgba(255,77,79,0.4);}
-.btn.primary:hover{transform:scale(1.05)}
-.btn.ghost{background:transparent;color:var(--muted);border:1px solid rgba(255,255,255,0.1);}
-.btn.small{padding:4px 8px;font-size:12px}
-
-/* submissions */
-.submissions-list{margin-top:12px;display:grid;gap:8px;max-height:300px;overflow:auto;padding-right:4px}
-.record{background:rgba(255,255,255,0.02);padding:8px;border-radius:6px}
-.meta{font-size:12px;color:var(--muted)}
-.txt{font-size:13px}
-
-/* guide */
-.guide-card{padding:10px;background:rgba(255,255,255,0.01);border-radius:6px;border:1px solid rgba(255,255,255,0.1)}
-
-/* footer */
-.footer{margin-top:12px;text-align:center;font-size:12px;color:var(--muted)}
-
-@media(max-width:640px){.options.grid{grid-template-columns:1fr}}
-
-</style>
-</head>
+  <link rel="stylesheet" href="styles.css"> <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  </head>
 <body>
   <main class="wrap">
-    <header class="hero">
-      <div class="hero-inner">
-        <h1>🐾 긴급! 24시 동물병원</h1>
-        <p class="lead">응급 상황—우리 서비스가 진짜 도움이 되도록, 솔직한 의견을 들려주세요.</p>
-      </div>
-    </header>
-
     <nav class="tabs">
       <button class="tab-btn active" data-target="survey">설문 참여</button>
       <button class="tab-btn" data-target="guide">설문 안내</button>
       <button class="tab-btn" data-target="submissions">다른 사람 의견 보기</button>
     </nav>
 
-    <!-- 설문 -->
     <section id="survey" class="tab-panel active panel">
       <form id="petSurveyForm" class="survey-form" autocomplete="off">
-        <!-- 1 -->
         <div class="form-card">
           <label class="q">1. 반려동물을 키우시나요? <span class="required">*</span></label>
           <div class="options inline">
@@ -114,8 +24,6 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
             <label><input type="radio" name="hasPet" value="아니오"> 아니오</label>
           </div>
         </div>
-
-        <!-- 2 -->
         <div class="form-card">
           <label class="q">2. 당신이 사는 지역은 어디인가요?</label>
           <div class="options">
@@ -126,8 +34,6 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
             <input type="text" name="regionOther" placeholder="직접 입력" style="display:none;">
           </div>
         </div>
-
-        <!-- 3 -->
         <div class="form-card">
           <label class="q">3. 평소 동물병원 선택 시 가장 우선시하는 기준은 무엇인가요? <span class="required">*</span></label>
           <select name="priorityCriteria" required>
@@ -139,14 +45,10 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
             <option value="의료진의 전문성 및 경험">의료진의 전문성 및 경험</option>
           </select>
         </div>
-
-        <!-- 4 -->
         <div class="form-card">
           <label class="q">4. 응급 상황에서 우려되는 점과, 필요한 서비스 기능은 무엇인가요?” <span class="required">*</span></label>
           <textarea name="concernAndFeature" rows="5" placeholder="예: 야간 응급비용이 불투명 → 가격 투명성 & 예상비용 계산 기능" required></textarea>
         </div>
-
-        <!-- 5 -->
         <div class="form-card">
           <label class="q">5. 응급 상황 시 병원 정보에서 '가장 중요한 정보(1순위)'와 '두 번째로 중요한 정보(2순위)'를 선택해주세요. <span class="required">*</span></label>
           <div class="priority-grid">
@@ -170,8 +72,6 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
             </div>
           </div>
         </div>
-
-        <!-- 6 -->
         <div class="form-card">
           <label class="q">6. 반려동물 응급 시 최대 지불 의향 금액 범위는? <span class="required">*</span></label>
           <div class="options grid">
@@ -191,7 +91,6 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
       </form>
     </section>
 
-    <!-- GUIDE -->
     <section id="guide" class="tab-panel panel">
       <article class="guide-card">
         <h3>설문 안내 & 개인정보</h3>
@@ -199,13 +98,12 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
       </article>
     </section>
 
-    <!-- SUBMISSIONS -->
     <section id="submissions" class="tab-panel panel">
       <div class="panel-head">
         <h3>최근 제출된 의견</h3>
       </div>
       <div id="submissionsList" class="submissions-list">
-        <div class="placeholder">아직 제출된 기록이 없습니다.</div>
+        <div class="placeholder">제출된 기록을 불러오는 중입니다...</div>
       </div>
 
       <div class="charts">
@@ -221,135 +119,5 @@ select,textarea,input[type="text"]{width:100%;padding:8px;border-radius:6px;back
     </footer>
   </main>
 
-<script id="jsbin-javascript">
-document.addEventListener("DOMContentLoaded", () => {
- const submissions = [];
-
- // TAB
- document.querySelectorAll(".tab-btn").forEach(btn => {
-  btn.addEventListener("click", () => {
-   document.querySelectorAll(".tab-btn").forEach(b => b.classList.remove("active"));
-   document.querySelectorAll(".tab-panel").forEach(p => p.classList.remove("active"));
-   btn.classList.add("active");
-   document.getElementById(btn.dataset.target).classList.add("active");
-   if(btn.dataset.target==="submissions") renderCharts();
-  });
- });
-
- // "지역 기타" 입력 제어
- const regionRadios = document.querySelectorAll('input[name="region"]');
- const regionOtherInput = document.querySelector('input[name="regionOther"]');
- regionRadios.forEach(radio=>{
-  radio.addEventListener('change',()=>{
-   if(radio.value==="기타"){
-    regionOtherInput.style.display='block';
-    regionOtherInput.required=true;
-   }else{
-    regionOtherInput.style.display='none';
-    regionOtherInput.required=false;
-   }
-  });
- });
-
- // FORM SUBMIT
- const form=document.getElementById("petSurveyForm");
- const msg=document.getElementById("msg");
- const submissionsList=document.getElementById("submissionsList");
-
- const keyMap={
-  hasPet:"반려동물 보유",
-  region:"지역",
-  regionOther:"직접 입력 지역",
-  priorityCriteria:"병원 선택 기준",
-  concernAndFeature:"불만/필요 기능",
-  priority1:"1순위 정보",
-  priority2:"2순위 정보",
-  priceRange:"최대 지불 의향"
- };
-
- form.addEventListener("submit",(e)=>{
-  e.preventDefault();
-  msg.textContent="💌 제출이 완료되었습니다!";
-  const data=new FormData(form);
-  const payload={};
-  for(const [k,v] of data.entries()) payload[k]=v;
-
-  // submissions 저장
-  submissions.push(payload);
-
-  // submissions list에 추가, 불필요 기본값 제거
-  const card=document.createElement("div");
-  card.className="record";
-  let html=Object.entries(payload).filter(([k,v])=>{
-   if(k==="regionOther" && payload.region!=="기타") return false;
-   if(k==="hasPet" && v==="예") return false;
-   return v!=="";
-  }).map(([k,v])=>`<div><strong>${keyMap[k]||k}:</strong> ${v}</div>`).join("");
-  if(html==="") html="<div>제출된 정보 없음</div>";
-  card.innerHTML=html;
-  submissionsList.prepend(card);
-
-  form.reset();
-  regionOtherInput.style.display='none';
-  
-  // 제출 후 '다른 사람 의견 보기' 탭을 자동으로 클릭하여 그래프를 표시합니다.
-  document.querySelector('.tab-btn[data-target="submissions"]').click();
- });
-
- // CHART
- function renderCharts(){
-  const regionCount={};
-  const priceCount={};
-
-  submissions.forEach(s=>{
-   // 지역
-   let reg=s.region==="기타"? s.regionOther:s.region;
-   if(reg) regionCount[reg]=(regionCount[reg]||0)+1;
-   // 가격
-   let price=s.priceRange;
-   if(price) priceCount[price]=(priceCount[price]||0)+1;
-  });
-
-  // REGION CHART
-  const ctxR=document.getElementById("regionChart").getContext("2d");
-  // destroy 오류 해결: window.regionChart가 객체이고, destroy가 함수인지 확인
-  if (window.regionChart && typeof window.regionChart.destroy === 'function') {
-    window.regionChart.destroy();
-  }
-  window.regionChart=new Chart(ctxR,{
-   type:'bar',
-   data:{
-    labels:Object.keys(regionCount),
-    datasets:[{
-     label:'응답 수',
-     data:Object.values(regionCount),
-     backgroundColor:'rgba(255,77,79,0.7)'
-    }]
-   },
-   options:{responsive:true,plugins:{legend:{display:false}}}
-  });
-
-  // PRICE CHART
-  const ctxP=document.getElementById("priceChart").getContext("2d");
-  // destroy 오류 해결: window.priceChart가 객체이고, destroy가 함수인지 확인
-  if(window.priceChart && typeof window.priceChart.destroy === 'function') {
-    window.priceChart.destroy();
-  }
-  window.priceChart=new Chart(ctxP,{
-   type:'bar',
-   data:{
-    labels:Object.keys(priceCount),
-    datasets:[{
-     label:'응답 수',
-     data:Object.values(priceCount),
-     backgroundColor:'rgba(255,159,67,0.7)'
-    }]
-   },
-   options:{responsive:true,plugins:{legend:{display:false}}}
-  });
- }
-});
-</script>
-</body>
+  <script src="script.js"></script> </body>
 </html>
-
